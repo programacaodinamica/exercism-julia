@@ -1,10 +1,4 @@
-cipher_char(c) = if c in 'a':'z'
-					Char('z' - Char(c - 'a'))
-				elseif c in '0':'9'
-					c
-				else
-					""
-				end
+cipher_char(c) = c in 'a':'z' ? Char('z' - Char(c - 'a')) : c
 
 function splitcode(msg)
 	cipher = ""
@@ -14,12 +8,13 @@ function splitcode(msg)
 		    cipher = cipher * " "
 		end
 	end
-	cipher
+	rstrip(cipher)
 end
 
-encode(input) = map(x -> cipher_char(x), lowercase(input))
+atbash(input) = map(x -> cipher_char(x), 
+	filter(x -> isletter(x) || isdigit(x), lowercase(input)))
 
-function decode(input)
+encode(input) = splitcode(atbash(input))
 
-end
+decode(input) = atbash(input)
 
